@@ -1,0 +1,62 @@
+{% extends "closedverse_main/layout.html" %}
+{% load closedverse_tags %}{% load closedverse_community %}{% block main-body %}
+<link rel="stylesheet" type="text/css" href="/static/revolution.css">
+<link rel="stylesheet" type="text/css" href="/static/blueness.css">
+
+
+<div class="community-main">
+		<div id="community-eyecatch"></div>
+	</div>
+          	<div class="community-top-sidebar">
+		<form action="{% url "main:community-search" %}" class="search">
+			<input maxlength="32" name="query" placeholder="Search all Communities" type="text"><input title="Search" type="submit" value="q">
+		</form>
+		<!--
+		<div id="identified-user-banner">
+			<a class="list-button" href="/identified_user_posts"><span class="title">Get the latest news here!</span><span class="text">Posts from Verified Users</span></a>
+		</div>-->
+		{% if settings.memo_title and settings.memo_msg %}
+		<div class="post-list-outline index-memo">
+            </div>
+			<h2 class="label">{{ settings.memo_title1 }}</h2>
+			{% autoescape off %}{{ settings.memo_msg1 }}{% endautoescape %}
+             		<h2>What is "Revolution"?</h2>
+		        <li>Glad you asked. Revolution is a Miiverse Clone programmed in Python, by SMF9 which is a lot based off Closedverse's CSS (Will be changed soon), and its JS code which will have some modifications. Stay tuned!</li>  
+                        <h2>Who is behind this?</h2> 
+                        <li>SMF9 and POYO Project Team made this. If you want anything down, please, <a href="/help/contact">contact us</a>.</li> 
+             		<h2>Will Revolution save any personnal info about me?</h2>
+			<li>No. Unless you post your personnal info. The only thing we can see is your IP, but we can't get much with it. Plus we have no reason to do that.</li>
+		</div>
+		{% endif %}
+
+	</div>
+	<div class="community-main">
+	{% if favorites %}
+		<h3 class="community-title symbol community-favorite-title">Favorite Communities</h3>
+		<div class="card" id="community-favorite">
+		  <ul>
+			{% for favorite in favorites %}
+				<li class="test-favorite-community">
+				  <a href="{% url "main:community-view" favorite.id %}" class="icon-container">
+					<img src="{{ favorite.icon }}" class="icon">
+					
+				  </a>
+				</li>
+			 {% endfor %}
+				
+			<li class="read-more">
+			  <a href="{% url "main:community-favorites" %}" class="favorite-community-link symbol"><span class="symbol-label">Show more</span></a>
+			</li>
+		  </ul>
+		</div>
+	{% endif %}
+		{% if feature %}
+			{% community_page_element feature "Featured Communities" True %}
+		{% endif %}
+			{% community_page_element general "General Communities" %}
+			{% community_page_element game "Game Communities" %}
+			{% community_page_element special "Special Communities" %}
+			<a href="{% url "main:community-viewall" %}" class="big-button">Show more</a>
+	</div>
+
+{% endblock %}
